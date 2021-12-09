@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+.contacts {
+    width: 50%;
+    background-color: black;
+    color: white;
+    font-size: 24px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.contacts .contact_header {
+    padding: 3%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contact_header .btn_add {
+    width: 50px;
+    height: 50px;
+    background-image: url(/images/add.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    cursor: pointer;
+}
+
+.contact_form {
+    padding: 2%;
+    border-bottom: 1px solid gray;
+}
+
+.contact_form .field{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact_form .field input {
+    width: 50%;
+    height: 30px;
+    outline: 0;
+}
+
+.contact_form .add {
+    display: block;
+    width: 120px;
+    height: 30px;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+
+.contacts .contact_list {
+    display: flex;
+    flex-direction: row;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    flex : 1;
+    overflow-y: scroll;
+}
+
+.contacts .contact_list .contact_item {
+    width: 50%;
+}
+
+.contact_item .contact_photo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid gray;
+    padding: 5%;
+    position: relative;
+}
+
+.contact_item .contact_photo span{
+    display: flex;
+    width: 120px;
+    height: 120px;
+    background-color: lightgreen;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    font-size: 48px;
+    text-transform: uppercase;
+}
+
+.contact_item .contact_info ul{
+    list-style: none;
+}
+
+.contact_item .contact_info li{
+    list-style: none;
+    border: 1px solid gray;
+    padding: 1%;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}
+
+.hidden {
+    display: none;
+}
+
+.contact_photo .btn_contact_remove {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 0;
+    left: 0;
+    background-image: url(/images/del.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    cursor: pointer;
+}
