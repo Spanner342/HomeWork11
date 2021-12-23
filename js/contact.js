@@ -224,16 +224,16 @@ class ContactsApp extends Contacts {
 
     set storage(data) {
        const jsondata = JSON.stringify(data); 
-       localStorage.setItem('notesData', jsondata); 
+       localStorage.setItem('contactData', jsondata); 
 
-       this.setCookie('notesDataExp', '1', {'max-age': 10});
+       this.setCookie('contactDataExp', '1', {'max-age': 10});
     }
 
     get storage() {
-        let notesData = localStorage.getItem('notesData');
-        if (!notesData) return [];
+        let contactData = localStorage.getItem('contactData');
+        if (!contactData) return [];
 
-        let data = JSON.parse(notesData);
+        let data = JSON.parse(contactData);
         return data;
     }
 
@@ -317,8 +317,8 @@ class ContactsApp extends Contacts {
        this.contactEmail = document.querySelector('.email');
        this.listElem = listElem;
 
-       let notesDataExp = this.getCookie('notesDataExp');
-       if (!notesDataExp) this.storage = [];
+       let contactDataExp = this.getCookie('contactDataExp');
+       if (!contactDataExp) this.storage = [];
 
        
 
