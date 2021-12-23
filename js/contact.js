@@ -134,6 +134,8 @@ class ContactsApp extends Contacts {
     update() {
         let data = this.get();
 
+        this.storage = data;
+
         this.listElem.innerHTML = "";
 
         data.forEach(note => {
@@ -189,6 +191,69 @@ class ContactsApp extends Contacts {
         });
     }
 
+    setCookie(name, value, options = {}) {
+
+        options = {
+          path: '/',
+          ...options
+        };
+      
+        if (options.expires instanceof Date) {
+          options.expires = options.expires.toUTCString();
+        }
+      
+        let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+      
+        for (let optionKey in options) {
+          updatedCookie += "; " + optionKey;
+          let optionValue = options[optionKey];
+          if (optionValue !== true) {
+            updatedCookie += "=" + optionValue;
+          }
+        }
+      
+        document.cookie = updatedCookie;
+      }
+
+    getCookie(name) {
+        let matches = document.cookie.match(new RegExp(
+          "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+    }
+
+    set storage(data) {
+       const jsondata = JSON.stringify(data); 
+       localStorage.setItem('notesData', jsondata); 
+
+       this.setCookie('notesDataExp', '1', {'max-age': 10});
+    }
+
+    get storage() {
+        let notesData = localStorage.getItem('notesData');
+        if (!notesData) return [];
+
+        let data = JSON.parse(notesData);
+        return data;
+    }
+
+    async getData() {
+        const data = await fetch('https://jsonplaceholder.typicode.com/users')
+        .then(response => response.json())
+        .then(result => result);
+
+        if (data && data.length > 0) {
+            data.forEach(item => {
+                this.add({ 
+                    name: item.name,
+                    phone: item.phone,
+                    address: `${item.address.street}  ${item.address.suite}`,
+                    email: item.email
+                }); 
+            });
+        this.update();
+        }
+    }
 
     init () {
         
@@ -251,5 +316,20 @@ class ContactsApp extends Contacts {
        this.contactAddress = document.querySelector('.address');
        this.contactEmail = document.querySelector('.email');
        this.listElem = listElem;
+
+       let notesDataExp = this.getCookie('notesDataExp');
+       if (!notesDataExp) this.storage = [];
+
+       
+
+       if(this.storage.length > 0) {
+            this.storage.forEach(note => {
+                this.add(note.data);
+            });
+       } else {
+            this.getData();
+       }
+
+       this.update();
     }
 }
